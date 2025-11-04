@@ -1,0 +1,97 @@
+<!-- app.html -->
+<div class="flex justify-content-center align-items-center min-h-screen surface-ground p-4">
+  <p-card header="Registration Form" subheader="Please fill out your personal details below"
+    styleClass="w-full md:w-8 lg:w-5 shadow-6 border-round-2xl p-5 surface-card">
+    <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+      <br>
+
+      <!-- Name -->
+      <p-floatLabel>
+        <input pInputText id="name" formControlName="name" />
+        <label for="name">Your Name</label>
+      </p-floatLabel>
+      <small class="p-error" *ngIf="formGroup.get('name')?.touched && formGroup.get('name')?.invalid">
+        Name is required (at least 2 characters)
+      </small>
+
+      <!-- Email -->
+      <p-floatLabel>
+        <input pInputText id="email" formControlName="email" />
+        <label for="email">Email Address</label>
+      </p-floatLabel>
+      <small class="p-error" *ngIf="formGroup.get('email')?.touched && formGroup.get('email')?.invalid">
+        Please enter a valid email
+      </small>
+
+      <!-- Date of Birth -->
+      <div>
+        <label class="font-semibold block mb-2">Date of Birth</label>
+        <p-datepicker formControlName="date" showIcon="true" placeholder="Select Date"></p-datepicker>
+      </div>
+
+      <!-- City -->
+      <div>
+        <label class="font-semibold block mb-2">Select City</label>
+        <p-cascadeSelect formControlName="selectedCity" [options]="countries" optionLabel="cname"
+          optionGroupLabel="name" [optionGroupChildren]="['states', 'cities']" placeholder="Select City"
+          style="min-width:14rem"></p-cascadeSelect>
+      </div>
+
+      <!-- Marital Status -->
+      <div>
+        <label class="font-semibold block mb-2">Marital Status</label>
+        <div class="flex align-items-center gap-2">
+          <p-toggleswitch formControlName="checked" inputId="checked"></p-toggleswitch>
+          <label for="checked">Married?</label>
+        </div>
+      </div>
+
+      <!-- Qualification -->
+      <div>
+        <label class="font-semibold block mb-2">Highest Qualification</label>
+        <p-select formControlName="selectedheightestQualification" [options]="heightestQualifications"
+          optionLabel="name" placeholder="Select Qualification"></p-select>
+      </div>
+
+      <!-- Gender using Angular 20 @for -->
+      <div>
+        <label class="font-semibold block mb-2">Gender</label>
+        <div class="flex flex-column gap-2">
+          @for (gender of genders; track gender.key) {
+            <div class="flex align-items-center gap-2">
+              <p-radioButton [inputId]="gender.key" name="gender"
+                [value]="gender.key" formControlName="gender"></p-radioButton>
+              <label [for]="gender.key">{{ gender.name }}</label>
+            </div>
+          } @empty {
+            <div>No genders defined.</div>
+          }
+        </div>
+      </div>
+
+      <!-- Confirmation -->
+      <div class="flex align-items-center gap-2 mt-3">
+        <p-checkbox formControlName="city" inputId="ny" binary="true"></p-checkbox>
+        <label for="ny" class="text-sm">Are you sure to submit?</label>
+      </div>
+
+      <!-- Submit -->
+      <div class="flex justify-content-end mt-3">
+        <p-button label="Submit" type="submit"
+          styleClass="p-button-lg p-button-success"
+          [disabled]="formGroup.invalid"></p-button>
+      </div>
+    </form>
+
+    <!-- Thank You Popup using @if -->
+    @if (showThankYou) {
+      <div class="backdrop">
+        <div class="greeting">
+          <h2>Thank You!</h2>
+          <p>Your submission has been received.</p>
+          <p-button label="Close" (onClick)="closeThankYou()" styleClass="p-button-rounded"></p-button>
+        </div>
+      </div>
+    }
+  </p-card>
+</div>
