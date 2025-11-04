@@ -39,7 +39,7 @@ export class App implements OnInit {
 
   title = 'form4';
 
-  // create form controls manually (no FormBuilder)
+  
   formGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -72,7 +72,7 @@ export class App implements OnInit {
   ];
 
   ngOnInit(): void {
-    // countries with nested states and cities
+    
     this.countries = [
       {
         name: 'Australia',
@@ -121,7 +121,7 @@ export class App implements OnInit {
     this.maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
   }
 
-  // when submit clicked
+  
   onSubmit() {
     if (this.formGroup.valid) {
       console.log('Form Submitted:', this.formGroup.value);
@@ -131,7 +131,7 @@ export class App implements OnInit {
     }
   }
 
-  // close the thank you message
+
   closeThankYou() {
     this.showThankYou = false;
   }
